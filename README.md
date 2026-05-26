@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # AuctionPro Live — Phase 2
 ### Professional Live Player Auction Management System
 
@@ -43,3 +44,6 @@ Open http://localhost:3000
 All data saved in data/auctionpro.db — persists through restarts.
 
 Default: admin / admin123
+=======
+# auction-dashboard
+>>>>>>> 4f93462949be1ad57ea173259c8a89ac5c7894c4
