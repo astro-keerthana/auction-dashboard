@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AuctionPro Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+<div id="app">
+  <!-- Login Screen -->
+  <div id="screen-login" class="screen active">
+    <div class="login-bg">
+      <div class="login-card">
+        <div class="login-logo">
+          <div class="logo-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <div class="login-brand">AuctionPro<span>Live</span></div>
+        </div>
+        <div class="login-tagline">Professional Player Auction System</div>
+        <div id="login-error" class="form-error" style="display:none"></div>
+        <div class="fg">
+          <label>Username</label>
+          <input type="text" id="login-user" placeholder="Enter username" autocomplete="username">
+        </div>
+        <div class="fg">
+          <label>Password</label>
+          <input type="password" id="login-pass" placeholder="Enter password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <button class="btn btn-primary btn-full" onclick="doLogin()">Sign In</button>
+        <div class="login-hint">Default: admin / admin123</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div id="screen-app" class="screen">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-top">
+        <div class="sidebar-logo">
+          <div class="logo-icon sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <span class="sidebar-brand">Auction<em>Pro</em></span>
+        </div>
+        <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+      </div>
+      <div class="sidebar-event-badge" id="sb-event-name">No Event Selected</div>
+      <nav class="sidebar-nav">
+        <a class="snav-item active" data-page="events" onclick="navTo('events')">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"/></svg>
+          Events
+        </a>
+        <a class="snav-item" data-page="admin" onclick="navTo('admin')" id="nav-admin" style="display:none">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd"/></svg>
+          Auction Control
+        </a>
+        <a class="snav-item" data-page="setup" onclick="navTo('setup')" id="nav-setup" style="display:none">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/><path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/></svg>
+          Event Setup
+        </a>
+        <a class="snav-item" data-page="live" onclick="navTo('live')" id="nav-live" style="display:none">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm12.553.106A1 1 0 0014 7v6a1 1 0 00.553.894l2 1A1 1 0 0018 14V6a1 1 0 00-1.447-.894l-2 1z"/></svg>
+          Live Display
+        </a>
+        <a class="snav-item" data-page="export" onclick="navTo('export')" id="nav-export" style="display:none">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+          Export
+        </a>
+        <div class="snav-divider" id="nav-users-divider" style="display:none"></div>
+        <a class="snav-item" data-page="users" onclick="navTo('users')" id="nav-users" style="display:none">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v1h8v-1zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-1a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v1h-3zM4.75 14.094A5.973 5.973 0 004 17v1H1v-1a3 3 0 013.75-2.906z"/></svg>
+          Users
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-chip" id="sidebar-user-chip">
+          <div class="user-chip-av" id="sidebar-user-av">A</div>
+          <div class="user-chip-info">
+            <div class="user-chip-name" id="sidebar-user-name">Admin</div>
+            <div class="user-chip-role" id="sidebar-user-role">Super Admin</div>
+          </div>
+          <button class="btn-logout" onclick="doLogout()" title="Sign out">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16"><path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"/></svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Top bar for mobile -->
+      <div class="mobile-topbar">
+        <button class="btn-hamburger" onclick="toggleSidebar()">☰</button>
+        <span class="mobile-page-title" id="mobile-page-title">Events</span>
+        <div class="live-badge-sm" id="mobile-live-badge" style="display:none">● LIVE</div>
+      </div>
+
+      <!-- Pages -->
+      <div id="page-events" class="page active"></div>
+      <div id="page-admin" class="page"></div>
+      <div id="page-setup" class="page"></div>
+      <div id="page-live" class="page" style="padding:0"></div>
+      <div id="page-export" class="page"></div>
+      <div id="page-users" class="page"></div>
+    </main>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toasts"></div>
+
+<!-- Modal container -->
+<div id="modal-root"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/api.js"></script>
+<script src="/js/app.js"></script>
+<script src="/js/pages/events.js"></script>
+<script src="/js/pages/admin.js"></script>
+<script src="/js/pages/setup.js"></script>
+<script src="/js/pages/live.js"></script>
+<script src="/js/pages/export.js"></script>
+<script src="/js/pages/users.js"></script>
+</body>
+</html>
